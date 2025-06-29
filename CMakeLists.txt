@@ -1248,14 +1248,23 @@ add_dependencies(shadps4 ImGui_Resources)
 target_include_directories(shadps4 PRIVATE ${IMGUI_RESOURCES_INCLUDE})
 
 if (ENABLE_QT_GUI)
-    set_target_properties(shadps4 PROPERTIES
-#       WIN32_EXECUTABLE ON
-        MACOSX_BUNDLE ON
-        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/dist/MacOSBundleInfo.plist.in"
-        MACOSX_BUNDLE_ICON_FILE "shadPS4.icns"
-        MACOSX_BUNDLE_SHORT_VERSION_STRING "${APP_VERSION}"
-    )
-
+    if (WIN32)
+	set_target_properties(shadps4 PROPERTIES
+		WIN32_EXECUTABLE ON
+		MACOSX_BUNDLE ON
+		MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/dist/MacOSBundleInfo.plist.in"
+		MACOSX_BUNDLE_ICON_FILE "shadPS4.icns"
+		MACOSX_BUNDLE_SHORT_VERSION_STRING "${APP_VERSION}"
+       	)
+    else()
+	    set_target_properties(shadps4 PROPERTIES
+	       	# WIN32_EXECUTABLE ON
+	        MACOSX_BUNDLE ON
+	        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/dist/MacOSBundleInfo.plist.in"
+	        MACOSX_BUNDLE_ICON_FILE "shadPS4.icns"
+	        MACOSX_BUNDLE_SHORT_VERSION_STRING "${APP_VERSION}"
+	    )
+    endif()
     set_source_files_properties(src/images/shadPS4.icns PROPERTIES
         MACOSX_PACKAGE_LOCATION Resources)
 endif()
